@@ -272,8 +272,6 @@ module.exports = function(deployer) {
 Como dito na configuração do ambiente, utilizaremos a Ganache como blockchain de desenvolvimento.
 Certifique-se que ela está instalada em sua máquina e dê um clique duplo em seu ícone. Após isso, ela iniciará e criará nossa rede local na porta 7545.
 
-![Ganache](http://truffleframework.com/tutorials/images/pet-shop/ganache-initial.png)
-
 5. Voltando ao terminal, digite o comando
 
 ```
@@ -301,8 +299,6 @@ Saving artifacts...
 Ao lado do nome de cada contrato temos o endereço dele na rede.
 
 6. Na Ganache, note que o estado da blockchain alterou. Agora a rede mostra que o bloco atual é o 4, e não mais o 0. Além disso, verificamos que o saldo anterior de 100 Ethers foi reduzido, devido ao custo para realizar transações na rede (GAS).
-
-![Ganache2](http://truffleframework.com/tutorials/images/pet-shop/ganache-migrated.png)
 
 Agora que temos nosso contrato disponível na blockchain, é o momento de interagirmos com ele.
 
