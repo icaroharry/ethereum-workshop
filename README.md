@@ -1,6 +1,6 @@
-# Ethereum workshop 2 : Adoção de animais para um Pet Shop 
+# Ethereum workshop: Adoção de animais
 
-#### NOTE: Swapy Network together with Ethereum-BH Meetup Group is hosting the second Ethereum-BH Workshop in Belo Horizonte, Brazil. This repository is based on [Pet Shop tutorial](http://truffleframework.com/tutorials/pet-shop) and aims to clarify all the process of creating a decentralized application. 
+#### NOTA: Esse tutorial é baseado na versão do tutorial da Swapy Network que por sua vez é baseado no [Pet Shop tutorial](http://truffleframework.com/tutorials/pet-shop) do Truffle. Todo o conteúdo é puramente didático e não deve ser usado em main net!
 
 ## Conteúdo
 
@@ -72,7 +72,7 @@ Utilizaremos também a Ganache, uma blockchain privada que permite a publicaçã
 
 Primeiramente, utilize o Git para clonar este repositório em sua máquina, na pasta que desejar
 ```
-git clone git@github.com:SwapyNetwork/pet-shop-box.git
+git@github.com:icaroharry/ethereum-workshop.git
 ```
 Navegue até a pasta raiz do projeto e instale as dependências locais com
 ```
@@ -333,10 +333,9 @@ Assim, iniciamos o contrato com quatro importantes importações:
 
 * ```Assert.sol```: Provê funções para testes de igualdade, desigualdade ou retornos errôneos. [Aqui](https://github.com/trufflesuite/truffle-core/blob/master/lib/testing/Assert.sol) você pode consultar a lista completa de funções para teste incluidas no Truffle.
 * ```DeployedAddresses.sol```: Quando rodamos os testes, o  Truffle publica temporariamente os contratos na blockchain. Esse contrato é responsável por armazenar os endereços desses contratos no ambiente de teste.
-* ```ThrowProxy.sol```: Por enquanto não conseguimos capturar exceções lançadas na linguagem Solidity. Entretanto, utilizando o contrato ThrowProxy, já fornecido na pasta ```test/```, conseguimos verificar quando uma função chamada através dele foi executada ou não. Para um melhor entendimento dessa solução em outro momento, acesse esse [tutorial](http://truffleframework.com/tutorials/testing-for-throws-in-solidity-tests)
 * ```Adoption.sol```: O Contrato que será testado.
 
-No escopo do contrato ```TestAdoption``` utilizaremos a instância ```adoption``` para testarmos o sucesso das funções e ```throwableAdoption``` para testarmos as falhas.
+No escopo do contrato ```TestAdoption``` utilizaremos a instância ```adoption``` para testarmos o sucesso das funções.
 
 Observação:
 
@@ -397,21 +396,6 @@ Observações:
 var (,adopter) = adoption.getPet(0);
 ```
 
-2. Adicione o código que segue ao final do contrato ```TestAdoption``` para o teste
-de busca de um animal inválido.
-```
-  // Testing invalid retrieval of a pet
-  function testUserCannotGetAnInvalidPet() public {
-    throwableAdoption.getPet(1);
-    throwProxy.shouldThrow();
-  }
-```
-
-Observações:
-
-* Nesse teste buscamos o segundo animal da lista.
-* Então, esperamos que essa função dispare uma exceção pois esse animal não existe.
-
 ### Testando a função: adopt
 1. Adicione o código que segue ao final do contrato ```TestAdoption``` para o teste
 de adoção de um animal válido.
@@ -432,21 +416,6 @@ Observações:
 * Nesse teste adotamos o primeiro animal da lista.
 * Então, esperamos que o animal adotado ao final do processo seja o mesmo.
 * Quando um contrato executa uma chamada de alto nível a outro contrato, a variável global ```msg``` também é alterada, ou seja, o ```msg.sender``` desse teste é o endereço do próprio contrato ```TestAdoption```. Isso torna o ```TestAdoption``` o adotante do animal.
-
-2. Adicione o código que segue ao final do contrato ```TestAdoption``` para o teste
-de adoção de um animal inválido.
-```
-  // Testing invalid adoption 
-  function testUserCannotAdoptAnInvalidPet() public {
-    throwableAdoption.adopt(1);
-    throwProxy.shouldThrow();
-  }
-```
-Observações:
-
-* Nesse teste adotamos o segundo animal da lista.
-* Então, esperamos que essa função dispare uma exceção pois esse animal não existe.
-
 
 ### Executando os testes
 
@@ -691,48 +660,25 @@ Agora estmoas prontos para usar o dapp!
 O jeito mais fácil de interagir com o nosso dapp no browser é utilizando a extensão [MetaMask](https://metamask.io).
 
 1. Instale o MetaMask no seu browser
-2. Após finalizar a instalação, você verá o ícone da raposa próximo a barra de endereço. Clique nele e você verá essa tela:
-
-![Privacy note](http://truffleframework.com/tutorials/images/pet-shop/metamask-privacy.png)
-
-3. Clique em `Accept` para aceitar a *Privacy Notice*.
-4. Após isso você verá os Termos de Uso. Leia-os, role até o final e clique em `Accept`.
-
-![Terms of use](http://truffleframework.com/tutorials/images/pet-shop/metamask-terms.png)
-
-5. Agora você verá a tela inicial o MetaMask. Clique em **Import Existing DEN**.
-
-![Tela inicial do MetaMask](http://truffleframework.com/tutorials/images/pet-shop/metamask-initial.png)
-
-6. Na caixa de texto `Wallet Seed`, coloque o *mnemônico* que é mostrado no ganache
-
-> candy maple cake sugar pudding cream honey rich smooth crumble sweet treat
+2. Após finalizar a instalação, você verá o ícone da raposa próximo a barra de endereço. Clique nele e clique em "continue"
+3. Clique em "import with seed phrase"
+4. Vá até o ganache e copie o mnemonico e cole no campo de "seed phrase"
 
 ```
 WARNING:
 Não use esse mnemônico na mainnet. Se você enviar ETH para qualquer conta criada com esse mnemônico você provavelmente irá perder tudo!
 ```
-Digite uma senha abaixo e clique em **OK**.
 
-![Seed](http://truffleframework.com/tutorials/images/pet-shop/metamask-seed.png)
-
+5. Crie uma nova senha
+6. Clique em `Accept` para aceitar a *Privacy Notice* e os demais termos requeridos.
 7. Agora precisamos conectar o MetaMask na blockchain do Ganache. Clique no menu que mostra `Main Network` e selecione **Custom RPC**.
-
-
-![Menu de networks do MetaMask](http://truffleframework.com/tutorials/images/pet-shop/metamask-networkmenu.png)
-
-8. Na caixa de texto chamada "New RPC URL" digite `http://127.0.0.1:7545` e clique em **Save**.
-
-![MetaMask Custom RPC](http://truffleframework.com/tutorials/images/pet-shop/metamask-customrpc.png)
-
+8. Na caixa de texto chamada "New RPC URL" digite `http://localhost:7545`.
 
 O nome da network no topo irá mudar para "Private Network".
 
 9. Clique na seta para retornar para a página de "Accounts".
 
 Cada carteira criada com o comando Truffle Develop possui 100 ether. Você irá perceber um pouco menos do que isso na primeira conta, porque para fazer o deploy do contrato e rodar os testes, um pouco de ether foi gasto.
-
-![Conta do MetaMask](http://truffleframework.com/tutorials/images/pet-shop/metamask-account1.png)
 
 A configuração está completa agora!
 
@@ -751,11 +697,7 @@ O servior irá iniciar e abrir automaticamente uma nova tab no seu browser com o
 
 3. Automaticamente, o MetaMask irá abrir um popup contendo informações sobre a transação a ser feita. Clique em **Submit** para aprovar a transação.
 
-![Informações da transação](http://truffleframework.com/tutorials/images/pet-shop/metamask-transactionconfirm.png)
-
 4. Após isso, você verá a transação listada na sua conta do MetaMask
-
-![Transações do MetaMask](http://truffleframework.com/tutorials/images/pet-shop/metamask-transactionsuccess.png). 
 
 Pronto! Agora que você viu como tudo funciona na prática, vamos propor um desafio.
 
@@ -795,8 +737,3 @@ Bônus:
 - Implemente uma página de log no frontend. 
 
 > Dica: estude a criação de um ```event```
-
-## Desafio surpresa
-Rinkeby Address: `0x1d2b1082226d079e18bbf4beb5ee4c75383db041`
-
-- Crie um pet com o seu nome no contrato da Rinkeby.
