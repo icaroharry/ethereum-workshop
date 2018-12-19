@@ -72,7 +72,7 @@ Utilizaremos também a Ganache, uma blockchain privada que permite a publicaçã
 
 Primeiramente, utilize o Git para clonar este repositório em sua máquina, na pasta que desejar
 ```
-git@github.com:icaroharry/ethereum-workshop.git
+git clone git@github.com:icaroharry/ethereum-workshop.git
 ```
 Navegue até a pasta raiz do projeto e instale as dependências locais com
 ```
